@@ -1,0 +1,565 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 60;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1BEEED5CC0DD6A83AD5A548C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B7150F0CA3F49CACA70E8D33 /* Assets.xcassets */; };
+		1C9E4B7A2D5F8036E1A9C4B8 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A2C1D9E6B70A315C48D21 /* StatsView.swift */; };
+		1FFEB22E7D455BCE6EE477D3 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4973AC386015A8EDC51402 /* AppTheme.swift */; };
+		2CBDFCE0B62B8C0C3F17F0AE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79F59C147E941B837D576D62 /* LaunchScreen.storyboard */; };
+		3F9B5E1A7C2D8046B9E3A257 /* StudioSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4A8D2E9F1B7035A8C6E140 /* StudioSupport.swift */; };
+		5C49604B9DFD19F51F184041 /* AppLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99890ED529E3045C1E1C522 /* AppLinks.swift */; };
+		5E8B2C7A1D4F9063B2E9A175 /* SprintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A7C9E1B4D6F8035C1A8E492 /* SprintView.swift */; };
+		5ED776D186822A54D6B2E4E8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFA6496622EFD2717B322DC /* ContentView.swift */; };
+		7B1E4D9C2A6F5083E1D7B249 /* CompareScenesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3F6A2C8E1B7045D9C0A836 /* CompareScenesView.swift */; };
+		8C3B393138E07B328EB40554 /* AppStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8112A64224FEFB89F2542F3F /* AppStorage.swift */; };
+		9ACA257D783A91BC270F42EC /* PolaroidFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = B362A9C387ADCA32A2585FE3 /* PolaroidFrame.swift */; };
+		A15D1CDAE24702F9F7CAA5BE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B4DD9B0FCAB9547902232028 /* Main.storyboard */; };
+		A36BEEE6CF79BB11E891392E /* WriterModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7E7968BC50D137F76E1FC8 /* WriterModels.swift */; };
+		C4659840544D933A27D83FD2 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFA0810E202FCD95DC92251 /* SettingsView.swift */; };
+		CB56785DC1434F0FED0ED308 /* EntryFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5908420A8544C5F36DF2F6 /* EntryFormView.swift */; };
+		CBE3133DCD937B7394C4783E /* InspirationPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E386AFA3D7F536E37D670028 /* InspirationPreviewView.swift */; };
+		D0AB9027B9C39DB7151837E8 /* PhotoPromptsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7122BE070B6D284382A28C05 /* PhotoPromptsView.swift */; };
+		D1817E6ACEC5D9B36E68DCEF /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A57A2AA8CEF4C0DCB119D613 /* PrivacyInfo.xcprivacy */; };
+		D9824C35DB7FB91EBD97CD4E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D5D5A4527712176E4F5797 /* SceneDelegate.swift */; };
+		E71FC343A677A6990EDB78C7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B09F041B4493AD15009C16E5 /* AppDelegate.swift */; };
+		F018204FF1F612338053611D /* ScreenBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF8185850B645A37228D241 /* ScreenBackground.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		2A7C9E1B4D6F8035C1A8E492 /* SprintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SprintView.swift; sourceTree = "<group>"; };
+		2BF006AFD68F2A956B60AB35 /* Pods_VyndaraMindfulExplorer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VyndaraMindfulExplorer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3BF8185850B645A37228D241 /* ScreenBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenBackground.swift; sourceTree = "<group>"; };
+		3F4973AC386015A8EDC51402 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
+		429B02F247E16C6641A183C6 /* VyndaraMindfulExplorer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VyndaraMindfulExplorer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		42D5D5A4527712176E4F5797 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		4F8A2C1D9E6B70A315C48D21 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
+		6C4A8D2E9F1B7035A8C6E140 /* StudioSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioSupport.swift; sourceTree = "<group>"; };
+		7122BE070B6D284382A28C05 /* PhotoPromptsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPromptsView.swift; sourceTree = "<group>"; };
+		79F59C147E941B837D576D62 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8112A64224FEFB89F2542F3F /* AppStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStorage.swift; sourceTree = "<group>"; };
+		8940B99FD0CEF9297FC58F77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9D3F6A2C8E1B7045D9C0A836 /* CompareScenesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompareScenesView.swift; sourceTree = "<group>"; };
+		A57A2AA8CEF4C0DCB119D613 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		A99890ED529E3045C1E1C522 /* AppLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLinks.swift; sourceTree = "<group>"; };
+		B09F041B4493AD15009C16E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B362A9C387ADCA32A2585FE3 /* PolaroidFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolaroidFrame.swift; sourceTree = "<group>"; };
+		B4DD9B0FCAB9547902232028 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		B7150F0CA3F49CACA70E8D33 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CA5908420A8544C5F36DF2F6 /* EntryFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryFormView.swift; sourceTree = "<group>"; };
+		D598FFDB9A1E5D37EF6212E1 /* Pods-VyndaraMindfulExplorer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VyndaraMindfulExplorer.debug.xcconfig"; path = "Target Support Files/Pods-VyndaraMindfulExplorer/Pods-VyndaraMindfulExplorer.debug.xcconfig"; sourceTree = "<group>"; };
+		E386AFA3D7F536E37D670028 /* InspirationPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspirationPreviewView.swift; sourceTree = "<group>"; };
+		E5ADFD2B7B736337BAE5F348 /* Pods-VyndaraMindfulExplorer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VyndaraMindfulExplorer.release.xcconfig"; path = "Target Support Files/Pods-VyndaraMindfulExplorer/Pods-VyndaraMindfulExplorer.release.xcconfig"; sourceTree = "<group>"; };
+		EA7E7968BC50D137F76E1FC8 /* WriterModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriterModels.swift; sourceTree = "<group>"; };
+		FEFA6496622EFD2717B322DC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		FFFA0810E202FCD95DC92251 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		016DA3B555C6B5085BDCFAEC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		01651A977D294D1E5611735F /* App */ = {
+			isa = PBXGroup;
+			children = (
+				B09F041B4493AD15009C16E5 /* AppDelegate.swift */,
+				8940B99FD0CEF9297FC58F77 /* Info.plist */,
+				79F59C147E941B837D576D62 /* LaunchScreen.storyboard */,
+				B4DD9B0FCAB9547902232028 /* Main.storyboard */,
+				42D5D5A4527712176E4F5797 /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		204B94A3040FC765677E4004 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F8FBD2AE669C6ED14AF80369 /* Chronicle */,
+				FEFA6496622EFD2717B322DC /* ContentView.swift */,
+				B12DFC235B7ADB897718602C /* Explore */,
+				53705D419FE7C8E8A3DA13E5 /* Prompts */,
+				B5DD45D96DCE3E4B892B7739 /* Settings */,
+				8B3D1E6A4C9F2057D1E8A3C6 /* Stats */,
+				A4E91C7B3F2D8056E1B9A370 /* Studio */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		37C4F859D8CAEC6F3E7BBF37 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				3F4973AC386015A8EDC51402 /* AppTheme.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		53705D419FE7C8E8A3DA13E5 /* Prompts */ = {
+			isa = PBXGroup;
+			children = (
+				7122BE070B6D284382A28C05 /* PhotoPromptsView.swift */,
+			);
+			path = Prompts;
+			sourceTree = "<group>";
+		};
+		5886B615522C4E1B2F14FD78 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				A99890ED529E3045C1E1C522 /* AppLinks.swift */,
+				3BF8185850B645A37228D241 /* ScreenBackground.swift */,
+				6C4A8D2E9F1B7035A8C6E140 /* StudioSupport.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		68F4BD0BF3A58E8D2E345DB4 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B7150F0CA3F49CACA70E8D33 /* Assets.xcassets */,
+				A57A2AA8CEF4C0DCB119D613 /* PrivacyInfo.xcprivacy */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		8B3D1E6A4C9F2057D1E8A3C6 /* Stats */ = {
+			isa = PBXGroup;
+			children = (
+				4F8A2C1D9E6B70A315C48D21 /* StatsView.swift */,
+			);
+			path = Stats;
+			sourceTree = "<group>";
+		};
+		A09F25BC26475FFE1B6DDDC6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				429B02F247E16C6641A183C6 /* VyndaraMindfulExplorer.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A4E91C7B3F2D8056E1B9A370 /* Studio */ = {
+			isa = PBXGroup;
+			children = (
+				2A7C9E1B4D6F8035C1A8E492 /* SprintView.swift */,
+			);
+			path = Studio;
+			sourceTree = "<group>";
+		};
+		AFEB6C14BFBA044BF1BAB866 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2BF006AFD68F2A956B60AB35 /* Pods_VyndaraMindfulExplorer.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B12DFC235B7ADB897718602C /* Explore */ = {
+			isa = PBXGroup;
+			children = (
+				E386AFA3D7F536E37D670028 /* InspirationPreviewView.swift */,
+				9D3F6A2C8E1B7045D9C0A836 /* CompareScenesView.swift */,
+			);
+			path = Explore;
+			sourceTree = "<group>";
+		};
+		B5DD45D96DCE3E4B892B7739 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				FFFA0810E202FCD95DC92251 /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		B9C4738B21DE981F6F9CDB49 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D598FFDB9A1E5D37EF6212E1 /* Pods-VyndaraMindfulExplorer.debug.xcconfig */,
+				E5ADFD2B7B736337BAE5F348 /* Pods-VyndaraMindfulExplorer.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		BE5419C0BCF853CA4613EE31 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				8112A64224FEFB89F2542F3F /* AppStorage.swift */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
+		E7B0AE71785E1D13F16C83AE = {
+			isa = PBXGroup;
+			children = (
+				FAD1A89C8CF94E1C63651369 /* VyndaraMindfulExplorer */,
+				A09F25BC26475FFE1B6DDDC6 /* Products */,
+				B9C4738B21DE981F6F9CDB49 /* Pods */,
+				AFEB6C14BFBA044BF1BAB866 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		F06855FF4BDCBF81C3E729BA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				EA7E7968BC50D137F76E1FC8 /* WriterModels.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F7EAAABE56606BA58AC3525E /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				B362A9C387ADCA32A2585FE3 /* PolaroidFrame.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		F8FBD2AE669C6ED14AF80369 /* Chronicle */ = {
+			isa = PBXGroup;
+			children = (
+				CA5908420A8544C5F36DF2F6 /* EntryFormView.swift */,
+			);
+			path = Chronicle;
+			sourceTree = "<group>";
+		};
+		FAD1A89C8CF94E1C63651369 /* VyndaraMindfulExplorer */ = {
+			isa = PBXGroup;
+			children = (
+				01651A977D294D1E5611735F /* App */,
+				F7EAAABE56606BA58AC3525E /* Components */,
+				F06855FF4BDCBF81C3E729BA /* Models */,
+				BE5419C0BCF853CA4613EE31 /* Persistence */,
+				68F4BD0BF3A58E8D2E345DB4 /* Resources */,
+				37C4F859D8CAEC6F3E7BBF37 /* Theme */,
+				5886B615522C4E1B2F14FD78 /* Utilities */,
+				204B94A3040FC765677E4004 /* Views */,
+			);
+			path = VyndaraMindfulExplorer;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DD079720B02E51CD49101699 /* VyndaraMindfulExplorer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5D5F5DA93135F23933509585 /* Build configuration list for PBXNativeTarget "VyndaraMindfulExplorer" */;
+			buildPhases = (
+				FEEAD393DC29F6561CEC7557 /* [CP] Check Pods Manifest.lock */,
+				6FDEB58B9A6B10C1657852BA /* Sources */,
+				016DA3B555C6B5085BDCFAEC /* Frameworks */,
+				644ADDB39CFCAD186FFCA49C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = VyndaraMindfulExplorer;
+			productName = VyndaraMindfulExplorer;
+			productReference = 429B02F247E16C6641A183C6 /* VyndaraMindfulExplorer.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3EA76F2DF1B7DE423EB13B39 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					DD079720B02E51CD49101699 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = CEAFEE8B4E58D36FE14B38B6 /* Build configuration list for PBXProject "VyndaraMindfulExplorer" */;
+			compatibilityVersion = "Xcode 15.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E7B0AE71785E1D13F16C83AE;
+			productRefGroup = A09F25BC26475FFE1B6DDDC6 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DD079720B02E51CD49101699 /* VyndaraMindfulExplorer */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		644ADDB39CFCAD186FFCA49C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2CBDFCE0B62B8C0C3F17F0AE /* LaunchScreen.storyboard in Resources */,
+				A15D1CDAE24702F9F7CAA5BE /* Main.storyboard in Resources */,
+				1BEEED5CC0DD6A83AD5A548C /* Assets.xcassets in Resources */,
+				D1817E6ACEC5D9B36E68DCEF /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		FEEAD393DC29F6561CEC7557 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-VyndaraMindfulExplorer-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6FDEB58B9A6B10C1657852BA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E71FC343A677A6990EDB78C7 /* AppDelegate.swift in Sources */,
+				D9824C35DB7FB91EBD97CD4E /* SceneDelegate.swift in Sources */,
+				9ACA257D783A91BC270F42EC /* PolaroidFrame.swift in Sources */,
+				A36BEEE6CF79BB11E891392E /* WriterModels.swift in Sources */,
+				8C3B393138E07B328EB40554 /* AppStorage.swift in Sources */,
+				1FFEB22E7D455BCE6EE477D3 /* AppTheme.swift in Sources */,
+				5C49604B9DFD19F51F184041 /* AppLinks.swift in Sources */,
+				F018204FF1F612338053611D /* ScreenBackground.swift in Sources */,
+				CB56785DC1434F0FED0ED308 /* EntryFormView.swift in Sources */,
+				5ED776D186822A54D6B2E4E8 /* ContentView.swift in Sources */,
+				CBE3133DCD937B7394C4783E /* InspirationPreviewView.swift in Sources */,
+				D0AB9027B9C39DB7151837E8 /* PhotoPromptsView.swift in Sources */,
+				C4659840544D933A27D83FD2 /* SettingsView.swift in Sources */,
+				1C9E4B7A2D5F8036E1A9C4B8 /* StatsView.swift in Sources */,
+				5E8B2C7A1D4F9063B2E9A175 /* SprintView.swift in Sources */,
+				7B1E4D9C2A6F5083E1D7B249 /* CompareScenesView.swift in Sources */,
+				3F9B5E1A7C2D8046B9E3A257 /* StudioSupport.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		4D4F748024BD3CF4AEE8DF28 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D598FFDB9A1E5D37EF6212E1 /* Pods-VyndaraMindfulExplorer.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = VyndaraMindfulExplorer/App/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Vyndara Mindful Explorer";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tay.vynd2r8m1ndf9lexpl0r3r;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		72CE73F8BD6DC90AD3DE4CB0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		CD7460EBE16D46177B30C25B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FDCC9619C3A2C92EDC44308C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E5ADFD2B7B736337BAE5F348 /* Pods-VyndaraMindfulExplorer.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = VyndaraMindfulExplorer/App/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Vyndara Mindful Explorer";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tay.vynd2r8m1ndf9lexpl0r3r;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5D5F5DA93135F23933509585 /* Build configuration list for PBXNativeTarget "VyndaraMindfulExplorer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D4F748024BD3CF4AEE8DF28 /* Debug */,
+				FDCC9619C3A2C92EDC44308C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CEAFEE8B4E58D36FE14B38B6 /* Build configuration list for PBXProject "VyndaraMindfulExplorer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				72CE73F8BD6DC90AD3DE4CB0 /* Debug */,
+				CD7460EBE16D46177B30C25B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3EA76F2DF1B7DE423EB13B39 /* Project object */;
+}
