@@ -1,79 +1,81 @@
 import Foundation
 
-struct ChronicleEntry: Codable, Identifiable, Hashable {
-    var id: UUID
-    var title: String
-    var prompts: [String]
-    var icon: String
-    var theme: String
-}
-
-struct PromptRevision: Codable, Identifiable, Hashable {
-    var id: UUID
-    var prompt: String
-    var savedAt: Date
-}
-
-struct PhotoPrompt: Codable, Identifiable, Hashable {
-    var id: UUID
-    var imageName: String
-    var caption: String
-    var prompt: String
-    var updatedAt: Date
-    var history: [PromptRevision]
-
-    enum CodingKeys: String, CodingKey {
-        case id, imageName, caption, prompt, updatedAt, history
-    }
-
-    init(id: UUID, imageName: String, caption: String, prompt: String, updatedAt: Date, history: [PromptRevision] = []) {
-        self.id = id
-        self.imageName = imageName
-        self.caption = caption
-        self.prompt = prompt
-        self.updatedAt = updatedAt
-        self.history = history
-    }
-
-    init(from decoder: Decoder) throws {
-        let c = try decoder.container(keyedBy: CodingKeys.self)
-        id = try c.decode(UUID.self, forKey: .id)
-        imageName = try c.decode(String.self, forKey: .imageName)
-        caption = try c.decode(String.self, forKey: .caption)
-        prompt = try c.decode(String.self, forKey: .prompt)
-        updatedAt = try c.decode(Date.self, forKey: .updatedAt)
-        history = try c.decodeIfPresent([PromptRevision].self, forKey: .history) ?? []
-    }
-}
-
-struct SceneCard: Identifiable, Hashable, Codable {
+struct FrameShot: Identifiable, Hashable, Codable {
     let id: String
     let imageName: String
     let title: String
-    let seedPrompt: String
-    let tags: [String]
     var isCustom: Bool
 
-    enum CodingKeys: String, CodingKey {
-        case id, imageName, title, seedPrompt, tags, isCustom
-    }
-
-    init(id: String, imageName: String, title: String, seedPrompt: String, tags: [String], isCustom: Bool = false) {
+    init(id: String, imageName: String, title: String, isCustom: Bool = false) {
         self.id = id
         self.imageName = imageName
         self.title = title
-        self.seedPrompt = seedPrompt
-        self.tags = tags
         self.isCustom = isCustom
     }
+}
 
-    init(from decoder: Decoder) throws {
-        let c = try decoder.container(keyedBy: CodingKeys.self)
-        id = try c.decode(String.self, forKey: .id)
-        imageName = try c.decode(String.self, forKey: .imageName)
-        title = try c.decode(String.self, forKey: .title)
-        seedPrompt = try c.decode(String.self, forKey: .seedPrompt)
-        tags = try c.decode([String].self, forKey: .tags)
-        isCustom = try c.decodeIfPresent(Bool.self, forKey: .isCustom) ?? false
+struct SceneBeats: Codable, Hashable, Equatable {
+    var watcher: String = ""
+    var want: String = ""
+    var obstacle: String = ""
+    var turn: String = ""
+    var lastLine: String = ""
+
+    var filledCount: Int {
+        [watcher, want, obstacle, turn, lastLine]
+            .filter { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
+            .count
     }
+
+    var isComplete: Bool { filledCount == 5 }
+
+    var lines: [(label: String, value: String)] {
+        [
+            ("Who is watching", watcher),
+            ("What they want", want),
+            ("What stands in the way", obstacle),
+            ("The turn from A to B", turn),
+            ("Last line spoken", lastLine)
+        ]
+    }
+}
+
+struct WrittenScene: Identifiable, Hashable, Codable {
+    var id: UUID
+    var frameA: FrameShot
+    var frameB: FrameShot
+    var beats: SceneBeats
+    var draft: String
+    var minutes: Int
+    var finishedAt: Date
+
+    var pairingTitle: String {
+        "\(frameA.title) × \(frameB.title)"
+    }
+}
+
+struct WorkshopDraft: Codable, Equatable {
+    var frameA: FrameShot?
+    var frameB: FrameShot?
+    var beats: SceneBeats = SceneBeats()
+
+    var hasPair: Bool { frameA != nil && frameB != nil }
+}
+
+enum FrameLibrary {
+    static let shots: [FrameShot] = [
+        FrameShot(id: "ferry", imageName: "FrameFerry", title: "Night crossing"),
+        FrameShot(id: "underpass", imageName: "FrameUnderpass", title: "Sodium pool"),
+        FrameShot(id: "laundry", imageName: "FrameLaundry", title: "Last dryer"),
+        FrameShot(id: "escape", imageName: "FrameFireEscape", title: "Snow on iron"),
+        FrameShot(id: "ticket", imageName: "FrameTicket", title: "Closed window"),
+        FrameShot(id: "greenhouse", imageName: "FrameGreenhouse", title: "Glass weather"),
+        FrameShot(id: "overpass", imageName: "FrameOverpass", title: "Above the lanes"),
+        FrameShot(id: "corridor", imageName: "FrameCorridor", title: "Room service gone")
+    ]
+}
+
+enum WorkshopRoute: Hashable {
+    case pair
+    case beats
 }

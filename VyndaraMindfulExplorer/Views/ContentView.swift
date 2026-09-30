@@ -3,123 +3,64 @@ import SwiftUI
 struct ContentView: View {
     @StateObject private var store = AppDataStore.shared
     @State private var showSettings = false
-    @State private var showForm = false
-    @State private var sprintCard: SceneCard?
-    @State private var query = ""
-    @State private var themeFilter: String?
-    @State private var iconFilter: String?
+    @State private var path = NavigationPath()
 
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 18) {
-                    Text("Chronicle")
-                        .font(.custom("Georgia", size: 34, relativeTo: .largeTitle))
-                        .foregroundColor(.white)
-                    Text("Prompts live on pictures. Pictures become scenes.")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
+        NavigationStack(path: $path) {
+            ZStack {
+                Color.clear
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 18) {
+                    Text("Two frames")
+                            .font(.system(size: 34, weight: .bold, design: .default))
+                            .foregroundColor(.white)
+                        Text("Write one scene from a pair. Five beats, then a locked draft.")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
 
-                    streakRow
-
-                    if let last = store.lastViewedCard {
-                        NavigationLink(value: last) {
-                            navRow("Continue: \(last.title)", icon: "arrow.uturn.backward.circle")
+                        NeonButton(title: "Pair two frames", icon: "rectangle.split.2x1") {
+                            path.append(WorkshopRoute.pair)
                         }
-                    }
 
-                    if let daily = store.dailyScene {
-                        dailyCard(daily)
-                    }
-
-                    NavigationLink {
-                        PhotoPromptsView()
-                    } label: {
-                        PolaroidFrame(tilt: -2) {
-                            Image("BannerCamera")
-                                .resizable()
-                                .scaledToFill()
-                                .frame(height: 140)
-                                .clipped()
+                        if store.draft.hasPair {
+                            continueDraft
                         }
-                    }
-                    .buttonStyle(.plain)
-                    .contentShape(Rectangle())
 
-                    favoritesShelf
-
-                    NavigationLink {
-                        InspirationPreviewView()
-                    } label: {
-                        navRow("Explore scenes", icon: "magnifyingglass.circle")
-                    }
-
-                    NavigationLink {
-                        CompareScenesView()
-                    } label: {
-                        navRow("Compare two scenes", icon: "rectangle.split.2x1")
-                    }
-
-                    NavigationLink {
-                        StatsView()
-                    } label: {
-                        navRow("Studio statistics", icon: "chart.bar.xaxis")
-                    }
-
-                    chronicleFilters
-
-                    if filteredEntries.isEmpty {
-                        VStack(spacing: 10) {
-                            Image(systemName: "lightbulb")
-                                .font(.system(size: 36))
-                                .foregroundColor(AppTheme.primary)
-                            Text(store.entries.isEmpty ? "Start capturing inspirations!" : "No annotations match.")
+                        if let latest = store.cards.first {
+                            Text("Latest scene")
                                 .font(.headline)
                                 .foregroundColor(.white)
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 24)
-                    } else {
-                        ForEach(filteredEntries) { entry in
-                            NavigationLink(value: entry) {
-                                HStack(alignment: .top) {
-                                    Text(emoji(entry.icon))
-                                        .font(.largeTitle)
-                                    VStack(alignment: .leading, spacing: 4) {
-                                        Text(entry.title)
-                                            .font(.custom("Georgia", size: 20))
-                                            .foregroundColor(.white)
-                                        Text(entry.prompts.first ?? "")
-                                            .font(.subheadline)
-                                            .foregroundColor(.secondary)
-                                            .lineLimit(2)
-                                        Text(entry.theme)
-                                            .font(.caption)
-                                            .foregroundColor(AppTheme.accent)
-                                    }
-                                    Spacer()
-                                }
-                                .padding(12)
-                                .background(AppTheme.surface.opacity(0.85), in: RoundedRectangle(cornerRadius: 12))
+                            NavigationLink(value: latest) {
+                                latestCard(latest)
                             }
                             .buttonStyle(.plain)
-                            .contentShape(Rectangle())
+                        } else {
+                            emptyState
+                        }
+
+                        if store.cards.count > 1 {
+                            Text("Finished scenes")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                            ForEach(Array(store.cards.dropFirst())) { scene in
+                                NavigationLink(value: scene) {
+                                    sceneRow(scene)
+                                }
+                                .buttonStyle(.plain)
+                            }
                         }
                     }
-
-                    NeonButton(title: "New annotation", icon: "plus") { showForm = true }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 20)
+                    .padding(.top, 16)
+                    .padding(.bottom, 28)
                 }
-                .padding(18)
+                .clearScrollBackground()
             }
-            .screenBackdrop("BgDesk")
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .screenBackdrop()
             .dismissKeyboardOnTap()
-            .searchable(text: $query, prompt: "Search chronicle")
-            .navigationDestination(for: ChronicleEntry.self) { entry in
-                EntryDetailView(entryId: entry.id)
-            }
-            .navigationDestination(for: SceneCard.self) { card in
-                PhotoPromptDetailView(card: card)
-            }
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button { showSettings = true } label: {
@@ -129,163 +70,103 @@ struct ContentView: View {
                     }
                 }
             }
-            .sheet(isPresented: $showForm) { EntryFormView().environmentObject(store) }
-            .sheet(isPresented: $showSettings) { SettingsView().environmentObject(store) }
-            .fullScreenCover(item: $sprintCard) { card in
-                SprintView(card: card).environmentObject(store)
+            .navigationDestination(for: WorkshopRoute.self) { route in
+                switch route {
+                case .pair:
+                    PairFramesView()
+                case .beats:
+                    BeatsView()
+                }
             }
-            .onAppear { store.ensureDailyScene() }
+            .navigationDestination(for: WrittenScene.self) { scene in
+                SceneCardDetailView(sceneId: scene.id)
+            }
+            .sheet(isPresented: $showSettings) {
+                SettingsView().environmentObject(store)
+            }
+            .onChange(of: store.homeTick) { _ in
+                path = NavigationPath()
+            }
         }
+        .background(Color.clear)
         .tint(AppTheme.accent)
         .preferredColorScheme(.dark)
         .environmentObject(store)
     }
 
-    private var streakRow: some View {
-        HStack {
-            Image(systemName: "flame.fill").foregroundColor(AppTheme.accent)
-            Text(store.currentStreak == 0 ? "No streak yet — capture today" : "\(store.currentStreak)-day streak")
-                .font(.headline)
-                .foregroundColor(.white)
-            Spacer()
-        }
-        .padding(14)
-        .background(AppTheme.surface.opacity(0.9), in: RoundedRectangle(cornerRadius: 10))
-    }
-
-    private func dailyCard(_ card: SceneCard) -> some View {
+    private var continueDraft: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Scene of the day")
+            Text("Open pairing")
                 .font(.caption.weight(.semibold))
                 .foregroundColor(AppTheme.accent)
-            NavigationLink(value: card) {
-                VStack(alignment: .leading, spacing: 8) {
-                    SceneArtwork(card: card)
-                        .frame(height: 150)
-                        .clipped()
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
-                    Text(card.title).font(.headline).foregroundColor(.white)
-                    Text(card.seedPrompt).font(.subheadline).foregroundColor(.secondary)
+            SplitFrameView(frameA: store.draft.frameA, frameB: store.draft.frameB, height: 120)
+            Text("\(store.draft.beats.filledCount) of 5 beats filled")
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+            HStack(spacing: 10) {
+                Button("Continue") {
+                    path.append(WorkshopRoute.pair)
+                    path.append(WorkshopRoute.beats)
                 }
-            }
-            .buttonStyle(.plain)
-            Button("Writing sprint") { sprintCard = card }
                 .frame(maxWidth: .infinity, minHeight: 44)
                 .foregroundColor(AppTheme.accent)
+                Button("Discard") { store.discardDraft() }
+                    .frame(minHeight: 44)
+                    .foregroundColor(.secondary)
+            }
+        }
+        .padding(14)
+        .background(AppTheme.slate, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+    }
+
+    private func latestCard(_ scene: WrittenScene) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            SplitFrameView(frameA: scene.frameA, frameB: scene.frameB, height: 150)
+            Text(scene.pairingTitle)
+                .font(.headline)
+                .foregroundColor(.white)
+            Text(scene.beats.lastLine)
+                .font(.system(.title3, design: .serif))
+                .foregroundColor(AppTheme.accent)
+                .italic()
         }
         .padding(12)
-        .background(AppTheme.slate, in: RoundedRectangle(cornerRadius: 12))
+        .background(AppTheme.slate, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
     }
 
-    @ViewBuilder
-    private var favoritesShelf: some View {
-        if !store.favoriteCards.isEmpty {
-            VStack(alignment: .leading, spacing: 10) {
-                Text("Favorites")
+    private func sceneRow(_ scene: WrittenScene) -> some View {
+        HStack(spacing: 12) {
+            SplitFrameView(frameA: scene.frameA, frameB: scene.frameB, height: 56)
+                .frame(width: 112, height: 56)
+                .clipped()
+            VStack(alignment: .leading, spacing: 4) {
+                Text(scene.pairingTitle)
                     .font(.headline)
                     .foregroundColor(.white)
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 12) {
-                        ForEach(store.favoriteCards) { card in
-                            NavigationLink(value: card) {
-                                VStack(alignment: .leading, spacing: 6) {
-                                    SceneArtwork(card: card)
-                                        .frame(width: 118, height: 86)
-                                        .clipped()
-                                        .clipShape(RoundedRectangle(cornerRadius: 6))
-                                    Text(card.title)
-                                        .font(.caption)
-                                        .foregroundColor(.white)
-                                        .lineLimit(1)
-                                        .frame(width: 118, alignment: .leading)
-                                }
-                            }
-                            .buttonStyle(.plain)
-                        }
-                    }
-                }
+                    .lineLimit(1)
+                Text(scene.beats.lastLine)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .lineLimit(2)
             }
-        }
-    }
-
-    @ViewBuilder
-    private var chronicleFilters: some View {
-        if !store.entries.isEmpty {
-            VStack(alignment: .leading, spacing: 8) {
-                Text("Chronicle")
-                    .font(.headline)
-                    .foregroundColor(.white)
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 8) {
-                        filterChip("All themes", selected: themeFilter == nil) { themeFilter = nil }
-                        ForEach(themes, id: \.self) { theme in
-                            filterChip(theme, selected: themeFilter == theme) {
-                                themeFilter = themeFilter == theme ? nil : theme
-                            }
-                        }
-                    }
-                }
-                HStack(spacing: 8) {
-                    ForEach(["lightbulb", "camera", "moon", "flame"], id: \.self) { icon in
-                        Button {
-                            iconFilter = iconFilter == icon ? nil : icon
-                        } label: {
-                            Text(emoji(icon))
-                                .padding(8)
-                                .background(iconFilter == icon ? AppTheme.accent.opacity(0.35) : AppTheme.surface, in: Circle())
-                        }
-                        .frame(minWidth: 44, minHeight: 44)
-                    }
-                }
-            }
-        }
-    }
-
-    private func filterChip(_ title: String, selected: Bool, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            Text(title)
-                .font(.caption)
-                .padding(.horizontal, 10)
-                .padding(.vertical, 7)
-                .background(selected ? AppTheme.accent.opacity(0.35) : AppTheme.surface, in: Capsule())
-                .foregroundColor(.white)
-        }
-    }
-
-    private func navRow(_ title: String, icon: String) -> some View {
-        HStack {
-            Image(systemName: icon).foregroundColor(AppTheme.accent)
-            Text(title).font(.headline).foregroundColor(.white).lineLimit(1)
             Spacer()
             Image(systemName: "chevron.right").foregroundColor(.secondary)
         }
+        .padding(12)
+        .background(AppTheme.surface.opacity(0.9), in: RoundedRectangle(cornerRadius: 10, style: .continuous))
+    }
+
+    private var emptyState: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("No scene cards yet")
+                .font(.headline)
+                .foregroundColor(.white)
+            Text("Pair two frames, fill the five beats, then write while the clock holds the save.")
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+        }
         .padding(14)
-        .background(AppTheme.slate, in: RoundedRectangle(cornerRadius: 10))
-    }
-
-    private var themes: [String] {
-        Array(Set(store.entries.map(\.theme))).sorted()
-    }
-
-    private var filteredEntries: [ChronicleEntry] {
-        store.entries.filter { entry in
-            let q = query.trimmingCharacters(in: .whitespacesAndNewlines)
-            let textOk = q.isEmpty
-                || entry.title.localizedCaseInsensitiveContains(q)
-                || entry.theme.localizedCaseInsensitiveContains(q)
-                || entry.prompts.contains { $0.localizedCaseInsensitiveContains(q) }
-            let themeOk = themeFilter == nil || entry.theme == themeFilter
-            let iconOk = iconFilter == nil || entry.icon == iconFilter
-            return textOk && themeOk && iconOk
-        }
-    }
-
-    private func emoji(_ icon: String) -> String {
-        switch icon {
-        case "camera": return "📷"
-        case "moon": return "🌙"
-        case "flame": return "🔥"
-        default: return "💡"
-        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(AppTheme.surface.opacity(0.85), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
     }
 }

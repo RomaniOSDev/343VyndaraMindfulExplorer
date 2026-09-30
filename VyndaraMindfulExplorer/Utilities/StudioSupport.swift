@@ -13,18 +13,27 @@ enum CaptureHaptics {
     }
 }
 
-struct SceneArtwork: View {
+struct FrameArtwork: View {
     @EnvironmentObject private var store: AppDataStore
-    let card: SceneCard
+    let frame: FrameShot
 
     var body: some View {
-        Group {
-            if card.isCustom, let image = store.uiImage(for: card) {
-                Image(uiImage: image).resizable().scaledToFill()
-            } else {
-                Image(card.imageName).resizable().scaledToFill()
+        Color.clear
+            .overlay {
+                artwork
+                    .resizable()
+                    .scaledToFill()
             }
+            .clipped()
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+            .accessibilityLabel(frame.title)
+    }
+
+    private var artwork: Image {
+        if frame.isCustom, let image = store.uiImage(for: frame) {
+            return Image(uiImage: image)
         }
+        return Image(frame.imageName)
     }
 }
 

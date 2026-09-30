@@ -2,7 +2,7 @@ import SwiftUI
 import UIKit
 
 extension View {
-    func screenBackdrop(_ imageName: String) -> some View {
+    func screenBackdrop(_ imageName: String = "BgWorkshop") -> some View {
         self
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background {
@@ -16,6 +16,11 @@ extension View {
                     .clipped()
                     .ignoresSafeArea()
             }
+    }
+
+    func clearScrollBackground() -> some View {
+        scrollContentBackground(.hidden)
+            .background(Color.clear)
     }
 
     func dismissKeyboardOnTap() -> some View {

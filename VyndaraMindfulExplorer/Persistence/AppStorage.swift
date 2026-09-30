@@ -7,16 +7,8 @@ extension Notification.Name {
     static let dataReset = Notification.Name("dataReset")
 }
 
-enum SceneLibrary {
-    static let cards: [SceneCard] = [
-        SceneCard(id: "camera", imageName: "BannerCamera", title: "Night lens", seedPrompt: "Who is watching from the other side of the glass?", tags: ["noir", "city"]),
-        SceneCard(id: "type", imageName: "BannerTypewriter", title: "Blank page", seedPrompt: "The first sentence you refuse to write.", tags: ["voice", "secret"]),
-        SceneCard(id: "board", imageName: "BannerBoard", title: "Pin wall", seedPrompt: "Connect three images into one character's memory.", tags: ["collage", "memory"])
-    ]
-}
-
-enum CaptureReminders {
-    static let requestId = "daily-capture"
+enum PairingReminders {
+    static let requestId = "evening-pairing"
 
     static func apply(enabled: Bool) {
         let center = UNUserNotificationCenter.current()
@@ -25,8 +17,8 @@ enum CaptureReminders {
         center.requestAuthorization(options: [.alert, .sound]) { ok, _ in
             guard ok else { return }
             let content = UNMutableNotificationContent()
-            content.title = "Don't skip the capture"
-            content.body = "One scene. One prompt. Keep the streak."
+            content.title = "Two frames. One scene."
+            content.body = "Pick a pair and lock a draft before the day closes."
             content.sound = .default
             var comps = DateComponents()
             comps.hour = 20
@@ -41,254 +33,145 @@ enum CaptureReminders {
 final class AppDataStore: ObservableObject {
     static let shared = AppDataStore()
 
-    @Published var entries: [ChronicleEntry] = []
-    @Published var photoPrompts: [PhotoPrompt] = []
-    @Published var favorites: [String] = []
-    @Published var recentlyViewed: [String] = []
-    @Published var customScenes: [SceneCard] = []
-    @Published var captureDays: [String] = []
-    @Published var dailySceneId: String = ""
+    @Published var cards: [WrittenScene] = []
+    @Published var customFrames: [FrameShot] = []
+    @Published var draft = WorkshopDraft()
     @Published var remindersEnabled = false
+    @Published var homeTick = 0
 
     private let defaults = UserDefaults.standard
-    private let entriesKey = "entries"
-    private let promptsKey = "photoPrompts"
-    private let favKey = "favorites"
-    private let recentKey = "recentlyViewed"
-    private let customKey = "customScenes"
-    private let captureKey = "captureDays"
-    private let dailyIdKey = "dailySceneId"
-    private let dailyDateKey = "dailySceneDate"
-    private let remindersKey = "remindersEnabled"
-    private var dailySceneDate = ""
+    private let cardsKey = "workshop_cards_v1"
+    private let customKey = "workshop_custom_frames_v1"
+    private let draftKey = "workshop_draft_v1"
+    private let remindersKey = "pairing_reminders_v1"
 
-    var allScenes: [SceneCard] { SceneLibrary.cards + customScenes }
-
-    var favoriteCards: [SceneCard] {
-        favorites.compactMap { id in allScenes.first { $0.id == id } }
-    }
-
-    var lastViewedCard: SceneCard? {
-        guard let id = recentlyViewed.first else { return nil }
-        return card(id: id)
-    }
-
-    var dailyScene: SceneCard? { card(id: dailySceneId) ?? allScenes.first }
-
-    var currentStreak: Int {
-        let cal = Calendar.current
-        let set = Set(captureDays)
-        var day = cal.startOfDay(for: Date())
-        if !set.contains(Self.dayString(day)) {
-            guard let yesterday = cal.date(byAdding: .day, value: -1, to: day) else { return 0 }
-            day = yesterday
-        }
-        var streak = 0
-        while set.contains(Self.dayString(day)) {
-            streak += 1
-            guard let previous = cal.date(byAdding: .day, value: -1, to: day) else { break }
-            day = previous
-        }
-        return streak
-    }
+    var allFrames: [FrameShot] { FrameLibrary.shots + customFrames }
 
     private init() { load() }
 
     func load() {
-        entries = decode([ChronicleEntry].self, key: entriesKey) ?? []
-        photoPrompts = decode([PhotoPrompt].self, key: promptsKey) ?? []
-        favorites = defaults.stringArray(forKey: favKey) ?? []
-        recentlyViewed = defaults.stringArray(forKey: recentKey) ?? []
-        customScenes = decode([SceneCard].self, key: customKey) ?? []
-        captureDays = defaults.stringArray(forKey: captureKey) ?? []
-        dailySceneId = defaults.string(forKey: dailyIdKey) ?? ""
-        dailySceneDate = defaults.string(forKey: dailyDateKey) ?? ""
+        cards = decode([WrittenScene].self, key: cardsKey) ?? []
+        customFrames = decode([FrameShot].self, key: customKey) ?? []
+        draft = decode(WorkshopDraft.self, key: draftKey) ?? WorkshopDraft()
         remindersEnabled = defaults.bool(forKey: remindersKey)
-        ensureDailyScene()
-        if remindersEnabled { CaptureReminders.apply(enabled: true) }
+        if remindersEnabled { PairingReminders.apply(enabled: true) }
     }
 
     func save() {
-        encode(entries, key: entriesKey)
-        encode(photoPrompts, key: promptsKey)
-        encode(customScenes, key: customKey)
-        defaults.set(favorites, forKey: favKey)
-        defaults.set(recentlyViewed, forKey: recentKey)
-        defaults.set(captureDays, forKey: captureKey)
-        defaults.set(dailySceneId, forKey: dailyIdKey)
-        defaults.set(dailySceneDate, forKey: dailyDateKey)
+        encode(cards, key: cardsKey)
+        encode(customFrames, key: customKey)
+        encode(draft, key: draftKey)
         defaults.set(remindersEnabled, forKey: remindersKey)
     }
 
-    func card(id: String) -> SceneCard? {
-        allScenes.first { $0.id == id }
+    func frame(id: String) -> FrameShot? {
+        allFrames.first { $0.id == id }
     }
 
-    func ensureDailyScene() {
-        let today = Self.dayString(Date())
-        if dailySceneDate == today, card(id: dailySceneId) != nil { return }
-        dailySceneId = (allScenes.randomElement() ?? SceneLibrary.cards[0]).id
-        dailySceneDate = today
+    func uiImage(for frame: FrameShot) -> UIImage? {
+        if frame.isCustom {
+            return UIImage(contentsOfFile: framesDirectory.appendingPathComponent(frame.imageName).path)
+        }
+        return UIImage(named: frame.imageName)
+    }
+
+    func setPair(a: FrameShot?, b: FrameShot?) {
+        draft.frameA = a
+        draft.frameB = b
         save()
     }
 
-    func upsertEntry(_ entry: ChronicleEntry) {
-        if let index = entries.firstIndex(where: { $0.id == entry.id }) {
-            entries[index] = entry
+    func toggleFrame(_ frame: FrameShot) {
+        if draft.frameA?.id == frame.id {
+            draft.frameA = nil
+        } else if draft.frameB?.id == frame.id {
+            draft.frameB = nil
+        } else if draft.frameA == nil {
+            draft.frameA = frame
+        } else if draft.frameB == nil {
+            draft.frameB = frame
         } else {
-            entries.insert(entry, at: 0)
-        }
-        recordCapture()
-        save()
-    }
-
-    func deleteEntry(_ id: UUID) {
-        entries.removeAll { $0.id == id }
-        save()
-    }
-
-    func prompt(for imageName: String) -> PhotoPrompt? {
-        photoPrompts.first { $0.imageName == imageName }
-    }
-
-    func upsertPrompt(_ item: PhotoPrompt) {
-        var next = item
-        if let index = photoPrompts.firstIndex(where: { $0.imageName == item.imageName }) {
-            let existing = photoPrompts[index]
-            if existing.prompt != item.prompt {
-                var history = existing.history
-                history.insert(PromptRevision(id: UUID(), prompt: existing.prompt, savedAt: existing.updatedAt), at: 0)
-                if history.count > 20 { history = Array(history.prefix(20)) }
-                next.history = history
-            } else {
-                next.history = existing.history
-            }
-            photoPrompts[index] = next
-        } else {
-            photoPrompts.append(next)
-        }
-        recordCapture()
-        save()
-    }
-
-    func restoreRevision(_ revision: PromptRevision, for imageName: String) {
-        guard let current = prompt(for: imageName) else { return }
-        let item = PhotoPrompt(id: current.id, imageName: current.imageName, caption: current.caption, prompt: revision.prompt, updatedAt: Date(), history: current.history)
-        upsertPrompt(item)
-    }
-
-    func addEntry(from card: SceneCard, note: String? = nil) {
-        let prompt = prompt(for: card.imageName)?.prompt ?? card.seedPrompt
-        var prompts = [prompt]
-        if let note, !note.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            prompts.append(note.trimmingCharacters(in: .whitespacesAndNewlines))
-        }
-        let entry = ChronicleEntry(id: UUID(), title: card.title, prompts: prompts, icon: "lightbulb", theme: card.tags.first ?? "scene")
-        upsertEntry(entry)
-        markViewed(card.id)
-    }
-
-    func toggleFavorite(_ id: String) {
-        if let index = favorites.firstIndex(of: id) {
-            favorites.remove(at: index)
-        } else {
-            favorites.append(id)
+            draft.frameB = frame
         }
         save()
     }
 
-    func markViewed(_ id: String) {
-        recentlyViewed.removeAll { $0 == id }
-        recentlyViewed.insert(id, at: 0)
-        if recentlyViewed.count > 12 { recentlyViewed = Array(recentlyViewed.prefix(12)) }
+    func updateBeats(_ beats: SceneBeats) {
+        draft.beats = beats
+        save()
+    }
+
+    func discardDraft() {
+        draft = WorkshopDraft()
+        save()
+    }
+
+    func completeScene(draftText: String, minutes: Int) {
+        guard let a = draft.frameA, let b = draft.frameB, draft.beats.isComplete else { return }
+        let scene = WrittenScene(
+            id: UUID(),
+            frameA: a,
+            frameB: b,
+            beats: draft.beats,
+            draft: draftText.trimmingCharacters(in: .whitespacesAndNewlines),
+            minutes: minutes,
+            finishedAt: Date()
+        )
+        cards.insert(scene, at: 0)
+        draft = WorkshopDraft()
+        save()
+        homeTick += 1
+        CaptureHaptics.capture()
+    }
+
+    func deleteCard(_ id: UUID) {
+        cards.removeAll { $0.id == id }
         save()
     }
 
     @discardableResult
-    func addCustomScene(imageData: Data, title: String, seed: String) -> SceneCard? {
+    func addCustomFrame(imageData: Data) -> FrameShot? {
         guard let raw = UIImage(data: imageData) else { return nil }
         let image = Self.downscale(raw)
         guard let jpeg = image.jpegData(compressionQuality: 0.82) else { return nil }
         let fileName = "\(UUID().uuidString).jpg"
-        let url = scenesDirectory.appendingPathComponent(fileName)
+        let url = framesDirectory.appendingPathComponent(fileName)
         do { try jpeg.write(to: url, options: .atomic) } catch { return nil }
-        let trimmedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
-        let trimmedSeed = seed.trimmingCharacters(in: .whitespacesAndNewlines)
-        let card = SceneCard(
+        let index = customFrames.count + 1
+        let shot = FrameShot(
             id: "custom-\(UUID().uuidString)",
             imageName: fileName,
-            title: trimmedTitle.isEmpty ? "Custom scene" : trimmedTitle,
-            seedPrompt: trimmedSeed.isEmpty ? "What memory lives in this frame?" : trimmedSeed,
-            tags: ["custom"],
+            title: "Picked frame \(index)",
             isCustom: true
         )
-        customScenes.insert(card, at: 0)
-        recordCapture()
+        customFrames.insert(shot, at: 0)
         save()
-        return card
-    }
-
-    func deleteCustomScene(_ id: String) {
-        guard let card = customScenes.first(where: { $0.id == id }) else { return }
-        let url = scenesDirectory.appendingPathComponent(card.imageName)
-        try? FileManager.default.removeItem(at: url)
-        customScenes.removeAll { $0.id == id }
-        favorites.removeAll { $0 == id }
-        recentlyViewed.removeAll { $0 == id }
-        photoPrompts.removeAll { $0.imageName == card.imageName }
-        if dailySceneId == id { dailySceneDate = ""; ensureDailyScene() }
-        save()
-    }
-
-    func uiImage(for card: SceneCard) -> UIImage? {
-        if card.isCustom {
-            return UIImage(contentsOfFile: scenesDirectory.appendingPathComponent(card.imageName).path)
-        }
-        return UIImage(named: card.imageName)
+        return shot
     }
 
     func setRemindersEnabled(_ enabled: Bool) {
         remindersEnabled = enabled
         save()
-        CaptureReminders.apply(enabled: enabled)
+        PairingReminders.apply(enabled: enabled)
     }
 
     func resetAllData() {
-        [entriesKey, promptsKey, favKey, recentKey, customKey, captureKey, dailyIdKey, dailyDateKey, remindersKey].forEach { defaults.removeObject(forKey: $0) }
-        try? FileManager.default.removeItem(at: scenesDirectory)
-        entries = []
-        photoPrompts = []
-        favorites = []
-        recentlyViewed = []
-        customScenes = []
-        captureDays = []
-        dailySceneId = ""
-        dailySceneDate = ""
+        [cardsKey, customKey, draftKey, remindersKey].forEach { defaults.removeObject(forKey: $0) }
+        try? FileManager.default.removeItem(at: framesDirectory)
+        cards = []
+        customFrames = []
+        draft = WorkshopDraft()
         remindersEnabled = false
-        CaptureReminders.apply(enabled: false)
-        ensureDailyScene()
+        PairingReminders.apply(enabled: false)
         NotificationCenter.default.post(name: .dataReset, object: nil)
+        save()
     }
 
-    func recordCapture() {
-        let today = Self.dayString(Date())
-        if !captureDays.contains(today) {
-            captureDays.append(today)
-        }
-    }
-
-    private var scenesDirectory: URL {
-        let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("Scenes", isDirectory: true)
+    private var framesDirectory: URL {
+        let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            .appendingPathComponent("Frames", isDirectory: true)
         try? FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
         return url
-    }
-
-    private static func dayString(_ date: Date) -> String {
-        let f = DateFormatter()
-        f.calendar = Calendar.current
-        f.locale = Locale(identifier: "en_US_POSIX")
-        f.dateFormat = "yyyy-MM-dd"
-        return f.string(from: date)
     }
 
     private static func downscale(_ image: UIImage, maxSide: CGFloat = 1600) -> UIImage {
